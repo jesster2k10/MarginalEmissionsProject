@@ -85,3 +85,5 @@ venv/*
 
 data/raw/eirgrid/frequency_ALL.csv
 data/raw/eirgrid/frequency_roi.csv
+
+.vscode/*
