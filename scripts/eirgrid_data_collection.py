@@ -88,11 +88,12 @@ def sync(areas: tuple[str], region: str):
         response = query_smartgrid({
             'area': area,
             'datefrom': format_datettime(last_updated),
-            'dateto': format_datettime(datetime.datetime.now()),
+            'dateto': format_datettime(datetime.datetime.now() - datetime.timedelta(30)),
             'region': region
         })
         df = pd.concat([df, response], ignore_index=True)
-        df.drop_duplicates(keep=False)
+        df = df.drop_duplicates(keep='first', subset=['EffectiveTime'])
+        df.to_csv(OUT_DIR / f'{area}_{region}_latest.csv')
 
 cli = click.CommandCollection(sources=[cli_collect, cli_sync])
 
